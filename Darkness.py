@@ -7,7 +7,7 @@ def main():
 
 def create_directory(p_name):
     # checks to see if a directory exists. If it doesn't, it makes a new one.
-    screenshots_dir = os.getcwd() + '\LakeDarkness\crypto_projects\{}'.format(p_name)
+    screenshots_dir = os.getcwd() + '\crypto_projects\{}'.format(p_name)
     
     isExist = os.path.exists(screenshots_dir)
     
