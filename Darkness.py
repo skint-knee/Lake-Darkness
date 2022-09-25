@@ -45,6 +45,8 @@ def create_directory(p_name):
             create_directory(p_name)     
         else:
             print(Fore.RED + "Declined action." + Style.RESET_ALL)
+    
+    return screenshots_dir
 
 def project_search(p_name):
     # OSINT search on crypto project
@@ -56,7 +58,7 @@ def project_search(p_name):
     return url_list
     
 
-def screenshots(p_name, url_list):
+def screenshots(p_name, url_list, project_dir):
     # Screenshot results
     #driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
@@ -71,12 +73,9 @@ def screenshots(p_name, url_list):
 
         driver.maximize_window()
         driver.get(url)
-        sleep(2)
 
-        driver.get_screenshot_as_file(screenshot_name)
-    
-        
-        shutil.move("{}".format(screenshot_name), "/Lake-Darkness")
+        driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+
         print("Took screenshot {}!".format(screenshot_name))
     
     driver.close()
