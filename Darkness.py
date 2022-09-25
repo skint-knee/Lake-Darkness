@@ -4,14 +4,17 @@ import shutil
 import googlesearch
 from time import sleep
 from selenium import webdriver
-from webdriver_manager.firefox import GeckoDriverManager
+
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 def main():
     pass
 
 def create_directory(p_name):
     # checks to see if a directory exists. If it doesn't, it makes a new one.
-    screenshots_dir = os.getcwd() + '\crypto_projects\{}'.format(p_name)
+    screenshots_dir = os.getcwd() + '\Lake-Darkness\projects\{}'.format(p_name)
     
     isExist = os.path.exists(screenshots_dir)
     
@@ -45,22 +48,36 @@ def create_directory(p_name):
 
 def project_search(p_name):
     # OSINT search on crypto project
-    new_search_generator = googlesearch.search(query=p_name, lang="en", start=1, stop=3, pause=2) 
-    
-    return list(new_search_generator)
+    new_search_generator = googlesearch.search(query=p_name, lang="en", start=1, stop=3, pause=2)
+    url_list = list(new_search_generator)
+
+    print("Found", len(url_list), "URLs")
+
+    return url_list
     
 
 def screenshots(p_name, url_list):
     # Screenshot results
-    driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+    #driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     
-    screenshot = 0
+    screenshot_num = 0
+
     for url in url_list:
 
+        screenshot_num = screenshot_num + 1
+        screenshot_name = '{}_screenshot_{}.png'.format(p_name, screenshot_num)
+
+        driver.maximize_window()
         driver.get(url)
-        sleep(1)
-        screenshot = screenshot + 1
-        driver.get_screenshot_as_file("{}_screenshot_{}.png".format(p_name, screenshot))
+        sleep(2)
+
+        driver.get_screenshot_as_file(screenshot_name)
+    
+        
+        shutil.move("{}".format(screenshot_name), "/Lake-Darkness")
+        print("Took screenshot {}!".format(screenshot_name))
     
     driver.close()
 
