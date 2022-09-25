@@ -1,6 +1,7 @@
 from colorama import Fore, Style
 import os
 import shutil
+import googlesearch
 
 def main():
     pass
@@ -38,6 +39,15 @@ def create_directory(p_name):
             create_directory(p_name)     
         else:
             print(Fore.RED + "Declined action." + Style.RESET_ALL)
+
+def project_search(p_name):
+    # OSINT search on crypto project
+    new_search = googlesearch.search(p_name, num_results=10, lang="en") 
+    return new_search
+    
+
+def screenshots():
+    pass
 
 if __name__=='__main__':
     main()
