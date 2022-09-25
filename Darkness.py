@@ -42,8 +42,8 @@ def create_directory(p_name):
 
 def project_search(p_name):
     # OSINT search on crypto project
-    new_search = googlesearch.search(p_name, num_results=10, lang="en") 
-    return new_search
+    new_search_list = googlesearch.search(p_name, num_results=10, lang="en") 
+    return new_search_list
     
 
 def screenshots():

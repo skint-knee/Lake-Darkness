@@ -20,8 +20,8 @@ def main():
         num = num + 1
         print("{}: {}".format((num), n))
 
-    
 
+"""
     # Screenshot results
     driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
@@ -32,7 +32,7 @@ def main():
 
     driver.close()
     # Put screenshots in the directory
-
+"""
 
 if __name__=='__main__':
     main()
