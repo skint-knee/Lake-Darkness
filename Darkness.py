@@ -46,7 +46,14 @@ def create_directory(p_name):
         else:
             print(Fore.RED + "Declined action." + Style.RESET_ALL)
     
-    return screenshots_dir
+    directory_tuple = (
+        screenshots_dir, 
+        screenshots_dir + "\community",
+        screenshots_dir + "\development",
+        screenshots_dir + "\\tokenomics"
+        )
+    
+    return directory_tuple
 
 def project_search(p_name):
     # OSINT search on crypto project
@@ -60,7 +67,6 @@ def project_search(p_name):
 
 def screenshots(p_name, url_list, project_dir):
     # Screenshot results
-    #driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     
@@ -74,7 +80,7 @@ def screenshots(p_name, url_list, project_dir):
         driver.maximize_window()
         driver.get(url)
         sleep(3)
-        driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+        driver.get_screenshot_as_file('{}\{}'.format(project_dir[1], screenshot_name))
 
         print("Took screenshot {}!".format(screenshot_name))
     

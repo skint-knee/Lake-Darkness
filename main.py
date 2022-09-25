@@ -8,7 +8,7 @@ def main():
     print("Input a project name:")
     project_name = str(input().lower())
 
-    # Create project directory.
+    # Create project directory. [0, 1, 2, 3] = [main, community, development, tokenomics]
     print("CREATING DIRECTORIES")
     project_directory = dark.create_directory(project_name)
 
