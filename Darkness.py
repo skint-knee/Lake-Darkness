@@ -2,6 +2,9 @@ from colorama import Fore, Style
 import os
 import shutil
 import googlesearch
+from time import sleep
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
 
 def main():
     pass
@@ -42,12 +45,24 @@ def create_directory(p_name):
 
 def project_search(p_name):
     # OSINT search on crypto project
-    new_search_list = googlesearch.search(p_name, num_results=10, lang="en") 
-    return new_search_list
+    new_search_generator = googlesearch.search(query=p_name, lang="en", start=1, stop=3, pause=2) 
+    
+    return list(new_search_generator)
     
 
-def screenshots():
-    pass
+def screenshots(p_name, url_list):
+    # Screenshot results
+    driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+    
+    screenshot = 0
+    for url in url_list:
+
+        driver.get(url)
+        sleep(1)
+        screenshot = screenshot + 1
+        driver.get_screenshot_as_file("{}_screenshot_{}.png".format(p_name, screenshot))
+    
+    driver.close()
 
 if __name__=='__main__':
     main()
