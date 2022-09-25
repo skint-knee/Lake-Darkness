@@ -73,10 +73,9 @@ def screenshots(p_name, url_list):
         driver.get(url)
         sleep(2)
 
-        driver.get_screenshot_as_file(screenshot_name)
-    
-        
-        shutil.move("{}".format(screenshot_name), "/Lake-Darkness")
+        driver.get_screenshot_as_file('Lake-Darkness/{}'.format(screenshot_name))
+
+        #shutil.move("{}".format(screenshot_name), "/Lake-Darkness")
         print("Took screenshot {}!".format(screenshot_name))
     
     driver.close()
