@@ -57,7 +57,7 @@ def create_directory(p_name):
 
 def project_search(p_name):
     # OSINT search on crypto project
-    new_search_generator = googlesearch.search(query=p_name, lang="en", start=1, stop=3, pause=2)
+    new_search_generator = googlesearch.search(query=p_name, lang="en", start=1, stop=5, pause=3)
     url_list = list(new_search_generator)
 
     print("Found", len(url_list), "URLs")
@@ -72,10 +72,10 @@ def screenshots(p_name, url_list, project_dir):
     
     screenshot_num = 0
 
-    for url in url_list:
+    for url in url_list[0]:
 
         screenshot_num = screenshot_num + 1
-        screenshot_name = '{}_screenshot_{}.png'.format(p_name, screenshot_num)
+        screenshot_name = '{}_community_screenshot_{}.png'.format(p_name, screenshot_num)
 
         driver.maximize_window()
         driver.get(url)
@@ -83,6 +83,33 @@ def screenshots(p_name, url_list, project_dir):
         driver.get_screenshot_as_file('{}\{}'.format(project_dir[1], screenshot_name))
 
         print("Took screenshot {}!".format(screenshot_name))
+        print(url)
+
+    for url in url_list[1]:
+
+        screenshot_num = screenshot_num + 1
+        screenshot_name = '{}_development_screenshot_{}.png'.format(p_name, screenshot_num)
+
+        driver.maximize_window()
+        driver.get(url)
+        sleep(3)
+        driver.get_screenshot_as_file('{}\{}'.format(project_dir[2], screenshot_name))
+
+        print("Took screenshot {}!".format(screenshot_name))
+        print(url)
+
+    for url in url_list[2]:
+
+        screenshot_num = screenshot_num + 1
+        screenshot_name = '{}_tokenomics_screenshot_{}.png'.format(p_name, screenshot_num)
+
+        driver.maximize_window()
+        driver.get(url)
+        sleep(3)
+        driver.get_screenshot_as_file('{}\{}'.format(project_dir[3], screenshot_name))
+
+        print("Saved {}!".format(screenshot_name))
+        print(url)
     
     driver.close()
 
