@@ -73,7 +73,7 @@ def screenshots(p_name, url_list, project_dir):
 
         driver.maximize_window()
         driver.get(url)
-
+        sleep(3)
         driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
 
         print("Took screenshot {}!".format(screenshot_name))
