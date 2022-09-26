@@ -90,6 +90,11 @@ def screenshots(p_name, url_list, project_dir):
         sleep(3)
         driver.get_screenshot_as_file('{}\{}'.format(project_dir[1], screenshot_name))
 
+        current_est = time.gmtime()
+        ts = calendar.timegm(current_est)
+        ts_conv = datetime.fromtimestamp(ts, tz=None)
+        print(ts_conv)
+
         print("Took screenshot {}!".format(screenshot_name))
         print(url)
 
@@ -120,6 +125,11 @@ def screenshots(p_name, url_list, project_dir):
         driver.get(url)
         sleep(3)
         driver.get_screenshot_as_file('{}\{}'.format(project_dir[3], screenshot_name))
+
+        current_est = time.gmtime()
+        ts = calendar.timegm(current_est)
+        ts_conv = datetime.fromtimestamp(ts, tz=None)
+        print(ts_conv)
 
         print("Saved {}!".format(screenshot_name))
         print(url)
