@@ -5,6 +5,7 @@ def main():
     print("Input a project name:")
     project_name = str(input().lower())
     # Create google search strings.
+    result_num = 1
     community_queries = [
         
         "{} site:twitter.com".format(project_name), 
@@ -33,7 +34,6 @@ def main():
 
     # Grab project URLs
     print("GETTING URLS")
-    result_num = 3
     print("community")
     community_urls = dark.project_search(community_queries, result_num)
     print("development")

@@ -1,9 +1,12 @@
+import calendar
 from colorama import Fore, Style
 import os
 import shutil
 import googlesearch
 from time import sleep
+import time
 from selenium import webdriver
+from datetime import datetime
 
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -73,7 +76,6 @@ def project_search(search_query, results):
 
 def screenshots(p_name, url_list, project_dir):
     # Screenshot results
-
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     
     screenshot_num = 0
@@ -100,6 +102,11 @@ def screenshots(p_name, url_list, project_dir):
         driver.get(url)
         sleep(3)
         driver.get_screenshot_as_file('{}\{}'.format(project_dir[2], screenshot_name))
+        
+        current_est = time.gmtime()
+        ts = calendar.timegm(current_est)
+        ts_conv = datetime.fromtimestamp(ts, tz=None)
+        print(ts_conv)
 
         print("Took screenshot {}!".format(screenshot_name))
         print(url)
