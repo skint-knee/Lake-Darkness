@@ -1,9 +1,12 @@
+import calendar
 from colorama import Fore, Style
 import os
 import shutil
 import googlesearch
 from time import sleep
+import time
 from selenium import webdriver
+from datetime import datetime
 
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -55,19 +58,24 @@ def create_directory(p_name):
     
     return directory_tuple
 
-def project_search(p_name):
+def project_search(search_query, results):
     # OSINT search on crypto project
-    new_search_generator = googlesearch.search(query=p_name, lang="en", start=1, stop=5, pause=3)
-    url_list = list(new_search_generator)
+    url_list = []
+    for q in search_query:
 
-    print("Found", len(url_list), "URLs")
+        new_search_generator = googlesearch.search(query=q, lang="en", start=1, stop=results, pause=3)
+    
+        url_list_conv = list(new_search_generator)
+        
+        for u in url_list_conv:
+            
+            url_list.append(u)
 
     return url_list
     
 
 def screenshots(p_name, url_list, project_dir):
     # Screenshot results
-
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     
     screenshot_num = 0
@@ -94,6 +102,11 @@ def screenshots(p_name, url_list, project_dir):
         driver.get(url)
         sleep(3)
         driver.get_screenshot_as_file('{}\{}'.format(project_dir[2], screenshot_name))
+        
+        current_est = time.gmtime()
+        ts = calendar.timegm(current_est)
+        ts_conv = datetime.fromtimestamp(ts, tz=None)
+        print(ts_conv)
 
         print("Took screenshot {}!".format(screenshot_name))
         print(url)

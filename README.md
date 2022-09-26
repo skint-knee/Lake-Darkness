@@ -1,2 +1,8 @@
 # Welcome to Lake Darkness
-This project was built using Python version 3.9.6
+Python version 3.9.6
+
+## Features
+[] OSINT Recon Automation (URLs by link order, screenshots, timestamps)
+[] 
+[] Link selection
+[] ML model for advanced link selection
