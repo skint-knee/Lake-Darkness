@@ -5,11 +5,25 @@ def main():
     print("Input a project name:")
     project_name = str(input().lower())
     # Create google search strings.
-    queries = [
+    community_queries = [
         
-        "{} community".format(project_name), 
-        "{} documentation whitepaper filetype:pdf".format(project_name), 
-        "{} total supply".format(project_name)
+        "{} site:twitter.com".format(project_name), 
+        '{} site:reddit.com'.format(project_name), 
+        '{} site:youtube.com'.format(project_name)
+        
+        ]
+    development_queries = [
+        
+        "{} whitepaper".format(project_name), 
+        "{} development team".format(project_name), 
+        "{} roadmap".format(project_name)
+        
+        ]
+    tokenomics_queries = [
+        
+        "{} price chart".format(project_name), 
+        "{} total supply".format(project_name), 
+        "{} tokenomics".format(project_name)
         
         ]
 
@@ -19,14 +33,15 @@ def main():
 
     # Grab project URLs
     print("GETTING URLS")
+    result_num = 3
     print("community")
-    project_urls_0 = dark.project_search(queries[0])
+    community_urls = dark.project_search(community_queries, result_num)
     print("development")
-    project_urls_1 = dark.project_search(queries[1])
+    development_urls = dark.project_search(development_queries, result_num)
     print("tokenomics")
-    project_urls_2 = dark.project_search(queries[2])
+    tokenomics_urls = dark.project_search(tokenomics_queries, result_num)
     
-    url_list_of_lists = [project_urls_0, project_urls_1, project_urls_2]
+    url_list_of_lists = [community_urls, development_urls, tokenomics_urls]
     # Take URL page screenshots and post to the project folder
     print("TAKING SCREENSHOTS")
     dark.screenshots(project_name, url_list_of_lists, project_directory)

@@ -55,12 +55,18 @@ def create_directory(p_name):
     
     return directory_tuple
 
-def project_search(p_name):
+def project_search(search_query, results):
     # OSINT search on crypto project
-    new_search_generator = googlesearch.search(query=p_name, lang="en", start=1, stop=5, pause=3)
-    url_list = list(new_search_generator)
+    url_list = []
+    for q in search_query:
 
-    print("Found", len(url_list), "URLs")
+        new_search_generator = googlesearch.search(query=q, lang="en", start=1, stop=results, pause=3)
+    
+        url_list_conv = list(new_search_generator)
+        
+        for u in url_list_conv:
+            
+            url_list.append(u)
 
     return url_list
     
