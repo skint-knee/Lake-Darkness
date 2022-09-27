@@ -78,7 +78,7 @@ def screenshots(p_name, url_list, project_dir):
     # Screenshot results
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     
-    screenshot_num = 0
+    screenshot_num = 0            
 
     for url in url_list[0]:
 
@@ -90,12 +90,15 @@ def screenshots(p_name, url_list, project_dir):
         sleep(3)
         driver.get_screenshot_as_file('{}\{}'.format(project_dir[1], screenshot_name))
 
-        current_est = time.gmtime()
-        ts = calendar.timegm(current_est)
-        ts_conv = datetime.fromtimestamp(ts, tz=None)
-        print(ts_conv)
+        t_stamp = timestamp()
 
-        print("Took screenshot {}!".format(screenshot_name))
+        with open('{}\\{}_community_URLs.txt'.format(project_dir[1], p_name), 'a') as f:
+            
+            f.write("{}\n".format(screenshot_name))  
+            f.write("{}\n".format(url))            
+            f.write("{}\n\n".format(t_stamp))
+
+        print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
         print(url)
 
     for url in url_list[1]:
@@ -108,12 +111,15 @@ def screenshots(p_name, url_list, project_dir):
         sleep(3)
         driver.get_screenshot_as_file('{}\{}'.format(project_dir[2], screenshot_name))
         
-        current_est = time.gmtime()
-        ts = calendar.timegm(current_est)
-        ts_conv = datetime.fromtimestamp(ts, tz=None)
-        print(ts_conv)
+        t_stamp = timestamp()
 
-        print("Took screenshot {}!".format(screenshot_name))
+        with open('{}\\{}_development_URLs.txt'.format(project_dir[2], p_name), 'a') as f:
+
+            f.write("{}\n".format(screenshot_name))  
+            f.write("{}\n".format(url))            
+            f.write("{}\n\n".format(t_stamp))
+
+        print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
         print(url)
 
     for url in url_list[2]:
@@ -126,15 +132,25 @@ def screenshots(p_name, url_list, project_dir):
         sleep(3)
         driver.get_screenshot_as_file('{}\{}'.format(project_dir[3], screenshot_name))
 
-        current_est = time.gmtime()
-        ts = calendar.timegm(current_est)
-        ts_conv = datetime.fromtimestamp(ts, tz=None)
-        print(ts_conv)
+        t_stamp = timestamp()
 
-        print("Saved {}!".format(screenshot_name))
+        with open('{}\\{}_tokenomics_URLs.txt'.format(project_dir[3], p_name), 'a') as f:
+
+            f.write("{}\n".format(screenshot_name))  
+            f.write("{}\n".format(url))            
+            f.write("{}\n\n".format(t_stamp))
+
+        print(Fore.GREEN + "Saved {}!".format(screenshot_name) + Style.RESET_ALL)
         print(url)
     
     driver.close()
+
+def timestamp():
+    current_est = time.gmtime()
+    ts = calendar.timegm(current_est)
+    ts_conv = datetime.fromtimestamp(ts, tz=None)
+
+    return ts_conv
 
 if __name__=='__main__':
     main()

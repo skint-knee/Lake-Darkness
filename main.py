@@ -1,4 +1,5 @@
 import Darkness as dark
+from colorama import Fore, Style
 
 def main():
     # Insert a project name
@@ -8,23 +9,23 @@ def main():
     result_num = 1
     community_queries = [
         
-        "{} site:twitter.com".format(project_name), 
-        '{} site:reddit.com'.format(project_name), 
-        '{} site:youtube.com'.format(project_name)
+        "{} site:twitter.com -hashtag".format(project_name), 
+        '{} governance'.format(project_name), 
+        '{} competitors'.format(project_name)
         
         ]
     development_queries = [
         
-        "{} whitepaper".format(project_name), 
-        "{} development team".format(project_name), 
-        "{} roadmap".format(project_name)
+        "{} website".format(project_name), 
+        "{} whitepaper OR developer docs".format(project_name), 
+        "{} purpose".format(project_name)
         
         ]
     tokenomics_queries = [
         
-        "{} price chart".format(project_name), 
         "{} total supply".format(project_name), 
-        "{} tokenomics".format(project_name)
+        "{} ICO or token distribution".format(project_name), 
+        "which exchange to buy {}".format(project_name)
         
         ]
 
@@ -43,8 +44,10 @@ def main():
     
     url_list_of_lists = [community_urls, development_urls, tokenomics_urls]
     # Take URL page screenshots and post to the project folder
-    print("TAKING SCREENSHOTS")
+    print("ATTEMPTING TO TAKE SCREENSHOTS")
     dark.screenshots(project_name, url_list_of_lists, project_directory)
+
+    print(Fore.YELLOW + "Finished preliminary recon on: {}".format(project_name) + Style.RESET_ALL)
 
 if __name__=='__main__':
     main()
