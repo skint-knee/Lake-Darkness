@@ -62,7 +62,7 @@ def main():
     
     d.close()
 
-    print(Fore.YELLOW + "Finished preliminary recon on: {}".format(project_name) + Style.RESET_ALL)
+    print(Fore.YELLOW + "Finished preliminary recon: {}".format(project_name) + Style.RESET_ALL)
 
 if __name__=='__main__':
     main()
