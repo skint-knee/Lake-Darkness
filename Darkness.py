@@ -1,4 +1,6 @@
 import calendar
+import multiprocessing
+from multiprocessing.connection import wait
 from pydoc import visiblename
 from colorama import Fore, Style
 import os
@@ -9,10 +11,15 @@ import time
 from datetime import datetime
 import sys
 
+import threading
+import multiprocessing
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+
+
 
 def main():
     pass
@@ -77,34 +84,49 @@ def project_search(search_query, results):
     return url_list
     
 
-def screenshots(driver, p_name, url_list, project_dir):
-    # Screenshot results
+def screenshots(driver, p_name, url_list, project_dir, type):
+    # Screenshot URL result
     screenshot_num = 0            
 
     for url in url_list:
 
         screenshot_num = screenshot_num + 1
-        screenshot_name = '{}_community_screenshot_{}.png'.format(p_name, screenshot_num)
+        screenshot_name = '{}_{}_screenshot_{}.png'.format(p_name, type, screenshot_num)
     
         driver.maximize_window()
-        
 
+        countdown_timer = threading.Thread(target = countdown)
+        countdown_timer.start()
+        while screenshot_timer > 0:
+            
+            driver.get(url)
+            driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+            break
+        if screenshot_timer ==0:
+            print("failed to take a screenshot")
+            driver.close()
+            break
+        countdown_timer.join()
+
+        """
         finished = 0
         while finished == 0:
             try:
                 driver.set_page_load_timeout(15)
-                driver.get(url)
-                driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+                
                 finished = 1
             except:
-                with open('{}\\{}_community_URLs.txt'.format(project_dir, p_name), 'a') as f:
+                with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
                     f.write("Screenshot failed.\n")  
                     
                 pass
 
-        t_stamp = timestamp()
+        """
+        
 
-        with open('{}\\{}_community_URLs.txt'.format(project_dir, p_name), 'a') as f:
+        t_stamp = timestamp()
+        # print URL to .txt file
+        with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
             
             f.write("{}\n".format(screenshot_name))  
             f.write("{}\n".format(url))            
@@ -112,6 +134,16 @@ def screenshots(driver, p_name, url_list, project_dir):
 
         print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
         print(url)
+
+
+def countdown():
+    global screenshot_timer
+    screenshot_timer = 10
+    for x in range(10):
+        screenshot_timer = screenshot_timer - x
+        sleep(1)
+    print("time up")
+
 
 def timestamp():
     current_est = time.gmtime()

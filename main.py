@@ -5,12 +5,16 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
+
+
+
+
 def main():
     # Insert a project name
     print("Input a project name:")
     project_name = str(input().lower())
     # Create google search strings.
-    result_num = 2
+    result_num = 1
     
     
     
@@ -56,12 +60,12 @@ def main():
     #url_list_of_lists = [community_urls, development_urls, tokenomics_urls]
     # Take URL page screenshots and post to the project folder
     print("ATTEMPTING TO TAKE SCREENSHOTS")
-    Options.page_load_strategy = "eager"
+    
     d = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-    dark.screenshots(d, project_name, community_urls, project_directory[1])
-    dark.screenshots(d, project_name, development_urls, project_directory[2])
-    dark.screenshots(d, project_name, tokenomics_urls, project_directory[3])
+    dark.screenshots(d, project_name, community_urls, project_directory[1], "community")
+    dark.screenshots(d, project_name, development_urls, project_directory[2], "development")
+    dark.screenshots(d, project_name, tokenomics_urls, project_directory[3], "tokenomics")
     
     d.close()
 
