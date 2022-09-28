@@ -1,4 +1,5 @@
 import calendar
+from pydoc import visiblename
 from colorama import Fore, Style
 import os
 import shutil
@@ -84,11 +85,22 @@ def screenshots(driver, p_name, url_list, project_dir):
 
         screenshot_num = screenshot_num + 1
         screenshot_name = '{}_community_screenshot_{}.png'.format(p_name, screenshot_num)
-
+    
         driver.maximize_window()
-        driver.get(url)
-        sleep(3)
-        driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+        
+
+        finished = 0
+        while finished == 0:
+            try:
+                driver.set_page_load_timeout(15)
+                driver.get(url)
+                driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+                finished = 1
+            except:
+                with open('{}\\{}_community_URLs.txt'.format(project_dir, p_name), 'a') as f:
+                    f.write("Screenshot failed.\n")  
+                    
+                pass
 
         t_stamp = timestamp()
 
