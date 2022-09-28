@@ -5,9 +5,10 @@ import shutil
 import googlesearch
 from time import sleep
 import time
-from selenium import webdriver
 from datetime import datetime
+import sys
 
+from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
@@ -48,6 +49,7 @@ def create_directory(p_name):
             create_directory(p_name)     
         else:
             print(Fore.RED + "Declined action." + Style.RESET_ALL)
+            sys.exit()
     
     directory_tuple = (
         screenshots_dir, 
@@ -74,13 +76,11 @@ def project_search(search_query, results):
     return url_list
     
 
-def screenshots(p_name, url_list, project_dir):
+def screenshots(driver, p_name, url_list, project_dir):
     # Screenshot results
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    
     screenshot_num = 0            
 
-    for url in url_list[0]:
+    for url in url_list:
 
         screenshot_num = screenshot_num + 1
         screenshot_name = '{}_community_screenshot_{}.png'.format(p_name, screenshot_num)
@@ -88,11 +88,11 @@ def screenshots(p_name, url_list, project_dir):
         driver.maximize_window()
         driver.get(url)
         sleep(3)
-        driver.get_screenshot_as_file('{}\{}'.format(project_dir[1], screenshot_name))
+        driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
 
         t_stamp = timestamp()
 
-        with open('{}\\{}_community_URLs.txt'.format(project_dir[1], p_name), 'a') as f:
+        with open('{}\\{}_community_URLs.txt'.format(project_dir, p_name), 'a') as f:
             
             f.write("{}\n".format(screenshot_name))  
             f.write("{}\n".format(url))            
@@ -100,50 +100,6 @@ def screenshots(p_name, url_list, project_dir):
 
         print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
         print(url)
-
-    for url in url_list[1]:
-
-        screenshot_num = screenshot_num + 1
-        screenshot_name = '{}_development_screenshot_{}.png'.format(p_name, screenshot_num)
-
-        driver.maximize_window()
-        driver.get(url)
-        sleep(3)
-        driver.get_screenshot_as_file('{}\{}'.format(project_dir[2], screenshot_name))
-        
-        t_stamp = timestamp()
-
-        with open('{}\\{}_development_URLs.txt'.format(project_dir[2], p_name), 'a') as f:
-
-            f.write("{}\n".format(screenshot_name))  
-            f.write("{}\n".format(url))            
-            f.write("{}\n\n".format(t_stamp))
-
-        print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
-        print(url)
-
-    for url in url_list[2]:
-
-        screenshot_num = screenshot_num + 1
-        screenshot_name = '{}_tokenomics_screenshot_{}.png'.format(p_name, screenshot_num)
-
-        driver.maximize_window()
-        driver.get(url)
-        sleep(3)
-        driver.get_screenshot_as_file('{}\{}'.format(project_dir[3], screenshot_name))
-
-        t_stamp = timestamp()
-
-        with open('{}\\{}_tokenomics_URLs.txt'.format(project_dir[3], p_name), 'a') as f:
-
-            f.write("{}\n".format(screenshot_name))  
-            f.write("{}\n".format(url))            
-            f.write("{}\n\n".format(t_stamp))
-
-        print(Fore.GREEN + "Saved {}!".format(screenshot_name) + Style.RESET_ALL)
-        print(url)
-    
-    driver.close()
 
 def timestamp():
     current_est = time.gmtime()
