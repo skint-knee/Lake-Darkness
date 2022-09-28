@@ -33,7 +33,7 @@ def main():
     tokenomics_queries = [
         
         "{} total supply".format(project_name), 
-        "{} ICO or token distribution".format(project_name), 
+        "{} ICO or token distribution -site:icodrops.com".format(project_name), 
         "which exchange to buy {}".format(project_name)
         
         ]
