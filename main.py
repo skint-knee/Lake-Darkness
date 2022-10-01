@@ -52,10 +52,13 @@ def main():
     print("GETTING URLS")
     print("Getting Community URLs...")
     community_urls = dark.project_search(community_queries, result_num)
+    dark.write_url_list_txt(community_urls, project_directory, project_name)
     print("Getting Development URLs...")
     development_urls = dark.project_search(development_queries, result_num)
+    dark.write_url_list_txt(development_urls, project_directory, project_name)
     print("Getting Tokenomics URLs...")
     tokenomics_urls = dark.project_search(tokenomics_queries, result_num)
+    dark.write_url_list_txt(tokenomics_urls, project_directory, project_name)
     
     #url_list_of_lists = [community_urls, development_urls, tokenomics_urls]
     # Take URL page screenshots and post to the project folder

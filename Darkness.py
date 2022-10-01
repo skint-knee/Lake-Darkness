@@ -84,7 +84,13 @@ def project_search(search_query, results):
 
     return url_list
 
+def write_url_list_txt(url_list, project_dir, p_name):
 
+    
+        for url in url_list:
+            with open('{}\\{}_URL_list.txt'.format(project_dir[0], p_name), 'a') as f:
+                f.write("{}\n".format(url))
+                f.close()
 
 def screenshot_threading(p_name, url_list, project_dir, type):
     # Screenshot URL result          
@@ -92,11 +98,9 @@ def screenshot_threading(p_name, url_list, project_dir, type):
     screenshot_num = 0
     for url in url_list:
         screenshot_num = screenshot_num + 1
-        #take_screenshot(driver, url, p_name, project_dir, screenshot_num, type)
-        #screenshot_thread = threading.Thread(target = take_screenshot, args = (driver, url, p_name, project_dir, screenshot_num, type))
+        
         screenshot_thread = threading.Thread(target = take_screenshot, args = (url, p_name, project_dir, screenshot_num, type))
         screenshot_thread.start()
-        time.sleep(3)
 
         #countdown_timer = threading.Thread(target = countdown)
         #countdown_timer.start()
@@ -110,11 +114,9 @@ def countdown():
     print("time up")
 
 def take_screenshot(url, p_name, project_dir, screenshot_num, type):
-
-    
-    screenshot_name = '{}_{}_screenshot_{}.png'.format(p_name, type, screenshot_num)
-    
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    screenshot_name = '{}_{}_screenshot_{}.png'.format(p_name, type, screenshot_num)
+      
     driver.maximize_window()
     driver.set_page_load_timeout(60)
     driver.get(url)
@@ -125,9 +127,12 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     # print URL to .txt file
     with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
         
-        f.write("{}\n".format(screenshot_name))  
-        f.write("{}\n".format(url))            
-        f.write("{}\n\n".format(t_stamp))
+        
+        f.write("{}".format(screenshot_name))
+        f.write("{}\n".format(t_stamp))
+        f.write("{}\n\n".format(url))  
+        
+        f.close()
 
     print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
     print(url)
