@@ -118,9 +118,14 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     time.sleep(2)
     
     driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+
+    t_stamp = timestamp()
+
+    print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
+    print(url)
+
     driver.close()
    
-    t_stamp = timestamp()
     # print URL to .txt file
     with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
         
@@ -131,8 +136,7 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
         
         f.close()
 
-    print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
-    print(url)
+    
 
 def timestamp():
     current_est = time.gmtime()
