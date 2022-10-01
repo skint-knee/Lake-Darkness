@@ -61,13 +61,13 @@ def main():
     # Take URL page screenshots and post to the project folder
     print("ATTEMPTING TO TAKE SCREENSHOTS")
     
-    d = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-
-    dark.screenshots(d, project_name, community_urls, project_directory[1], "community")
-    dark.screenshots(d, project_name, development_urls, project_directory[2], "development")
-    dark.screenshots(d, project_name, tokenomics_urls, project_directory[3], "tokenomics")
     
-    d.close()
+
+    dark.screenshot_threading(project_name, community_urls, project_directory[1], "community")
+    dark.screenshot_threading(project_name, development_urls, project_directory[2], "development")
+    dark.screenshot_threading(project_name, tokenomics_urls, project_directory[3], "tokenomics")
+    
+    
 
     print(Fore.YELLOW + "Finished preliminary recon: {}".format(project_name) + Style.RESET_ALL)
 

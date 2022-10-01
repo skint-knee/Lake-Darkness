@@ -2,6 +2,7 @@ import calendar
 import multiprocessing
 from multiprocessing.connection import wait
 from pydoc import visiblename
+from tracemalloc import take_snapshot
 from colorama import Fore, Style
 import os
 import shutil
@@ -82,59 +83,23 @@ def project_search(search_query, results):
             url_list.append(u)
 
     return url_list
-    
 
-def screenshots(driver, p_name, url_list, project_dir, type):
-    # Screenshot URL result
-    screenshot_num = 0            
 
+
+def screenshot_threading(p_name, url_list, project_dir, type):
+    # Screenshot URL result          
+    global screenshot_num
+    screenshot_num = 0
     for url in url_list:
-
         screenshot_num = screenshot_num + 1
-        screenshot_name = '{}_{}_screenshot_{}.png'.format(p_name, type, screenshot_num)
-    
-        driver.maximize_window()
+        #take_screenshot(driver, url, p_name, project_dir, screenshot_num, type)
+        #screenshot_thread = threading.Thread(target = take_screenshot, args = (driver, url, p_name, project_dir, screenshot_num, type))
+        screenshot_thread = threading.Thread(target = take_screenshot, args = (url, p_name, project_dir, screenshot_num, type))
+        screenshot_thread.start()
+        time.sleep(3)
 
-        countdown_timer = threading.Thread(target = countdown)
-        countdown_timer.start()
-        while screenshot_timer > 0:
-            
-            driver.get(url)
-            driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
-            break
-        if screenshot_timer ==0:
-            print("failed to take a screenshot")
-            driver.close()
-            break
-        countdown_timer.join()
-
-        """
-        finished = 0
-        while finished == 0:
-            try:
-                driver.set_page_load_timeout(15)
-                
-                finished = 1
-            except:
-                with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
-                    f.write("Screenshot failed.\n")  
-                    
-                pass
-
-        """
-        
-
-        t_stamp = timestamp()
-        # print URL to .txt file
-        with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
-            
-            f.write("{}\n".format(screenshot_name))  
-            f.write("{}\n".format(url))            
-            f.write("{}\n\n".format(t_stamp))
-
-        print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
-        print(url)
-
+        #countdown_timer = threading.Thread(target = countdown)
+        #countdown_timer.start()
 
 def countdown():
     global screenshot_timer
@@ -144,6 +109,28 @@ def countdown():
         sleep(1)
     print("time up")
 
+def take_screenshot(url, p_name, project_dir, screenshot_num, type):
+
+    
+    screenshot_name = '{}_{}_screenshot_{}.png'.format(p_name, type, screenshot_num)
+    
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver.maximize_window()
+    driver.set_page_load_timeout(60)
+    driver.get(url)
+    driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+    driver.close()
+   
+    t_stamp = timestamp()
+    # print URL to .txt file
+    with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
+        
+        f.write("{}\n".format(screenshot_name))  
+        f.write("{}\n".format(url))            
+        f.write("{}\n\n".format(t_stamp))
+
+    print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
+    print(url)
 
 def timestamp():
     current_est = time.gmtime()
