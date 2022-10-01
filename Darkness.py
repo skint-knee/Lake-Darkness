@@ -106,13 +106,6 @@ def screenshot_threading(p_name, url_list, project_dir, type):
 
     screenshot_thread.join()
 
-def countdown():
-    global screenshot_timer
-    screenshot_timer = 10
-    for x in range(10):
-        screenshot_timer = screenshot_timer - x
-        sleep(1)
-    print("time up")
 
 def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -121,7 +114,9 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     driver.maximize_window()
     driver.set_page_load_timeout(60)
     driver.get(url)
+
     time.sleep(2)
+    
     driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
     driver.close()
    
