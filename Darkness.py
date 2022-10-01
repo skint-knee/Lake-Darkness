@@ -1,4 +1,8 @@
 import calendar
+import multiprocessing
+from multiprocessing.connection import wait
+from pydoc import visiblename
+from tracemalloc import take_snapshot
 from colorama import Fore, Style
 import os
 import shutil
@@ -8,10 +12,15 @@ import time
 from datetime import datetime
 import sys
 
+import threading
+import multiprocessing
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+
+
 
 def main():
     pass
@@ -59,6 +68,7 @@ def create_directory(p_name):
         )
     
     return directory_tuple
+    
 
 def project_search(search_query, results):
     # OSINT search on crypto project
@@ -74,32 +84,60 @@ def project_search(search_query, results):
             url_list.append(u)
 
     return url_list
+
+def write_url_list_txt(url_list, project_dir, p_name):
+
     
+        for url in url_list:
+            with open('{}\\{}_URL_list.txt'.format(project_dir[0], p_name), 'a') as f:
+                f.write("{}\n".format(url))
+                f.close()
 
-def screenshots(driver, p_name, url_list, project_dir):
-    # Screenshot results
-    screenshot_num = 0            
-
+def screenshot_threading(p_name, url_list, project_dir, type):
+    # Screenshot URL result          
+    global screenshot_num
+    screenshot_num = 0
     for url in url_list:
-
         screenshot_num = screenshot_num + 1
-        screenshot_name = '{}_community_screenshot_{}.png'.format(p_name, screenshot_num)
+        
+        screenshot_thread = threading.Thread(target = take_screenshot, args = (url, p_name, project_dir, screenshot_num, type))
+        screenshot_thread.start()
+        time.sleep(3)
 
-        driver.maximize_window()
-        driver.get(url)
-        sleep(3)
-        driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+    screenshot_thread.join()
 
-        t_stamp = timestamp()
+def countdown():
+    global screenshot_timer
+    screenshot_timer = 10
+    for x in range(10):
+        screenshot_timer = screenshot_timer - x
+        sleep(1)
+    print("time up")
 
-        with open('{}\\{}_community_URLs.txt'.format(project_dir, p_name), 'a') as f:
-            
-            f.write("{}\n".format(screenshot_name))  
-            f.write("{}\n".format(url))            
-            f.write("{}\n\n".format(t_stamp))
+def take_screenshot(url, p_name, project_dir, screenshot_num, type):
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    screenshot_name = '{}_{}_screenshot_{}.png'.format(p_name, type, screenshot_num)
+      
+    driver.maximize_window()
+    driver.set_page_load_timeout(60)
+    driver.get(url)
+    time.sleep(2)
+    driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
+    driver.close()
+   
+    t_stamp = timestamp()
+    # print URL to .txt file
+    with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
+        
+        
+        f.write("{}\n".format(screenshot_name))
+        f.write("{}\n".format(t_stamp))
+        f.write("{}\n\n".format(url))  
+        
+        f.close()
 
-        print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
-        print(url)
+    print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
+    print(url)
 
 def timestamp():
     current_est = time.gmtime()
