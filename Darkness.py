@@ -121,6 +121,7 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     driver.maximize_window()
     driver.set_page_load_timeout(60)
     driver.get(url)
+    time.sleep(2)
     driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))
     driver.close()
    
@@ -129,9 +130,9 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
         
         
-        f.write("{}".format(screenshot_name))
-        f.write("{}\n\n".format(t_stamp))
-        f.write("{}\n\n\n".format(url))  
+        f.write("{}\n".format(screenshot_name))
+        f.write("{}\n".format(t_stamp))
+        f.write("{}\n\n".format(url))  
         
         f.close()
 
