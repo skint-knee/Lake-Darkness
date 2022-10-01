@@ -68,6 +68,7 @@ def create_directory(p_name):
         )
     
     return directory_tuple
+    
 
 def project_search(search_query, results):
     # OSINT search on crypto project
@@ -101,9 +102,9 @@ def screenshot_threading(p_name, url_list, project_dir, type):
         
         screenshot_thread = threading.Thread(target = take_screenshot, args = (url, p_name, project_dir, screenshot_num, type))
         screenshot_thread.start()
+        time.sleep(3)
 
-        #countdown_timer = threading.Thread(target = countdown)
-        #countdown_timer.start()
+    screenshot_thread.join()
 
 def countdown():
     global screenshot_timer
@@ -129,8 +130,8 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
         
         
         f.write("{}".format(screenshot_name))
-        f.write("{}\n".format(t_stamp))
-        f.write("{}\n\n".format(url))  
+        f.write("{}\n\n".format(t_stamp))
+        f.write("{}\n\n\n".format(url))  
         
         f.close()
 
