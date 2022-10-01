@@ -3,6 +3,7 @@ Python version 3.10.5
 
 ## Features
 - [x] OSINT Recon Automation (URLs by link order, screenshots, timestamps)
+- [ ] Screenshot full screen/certain elements
 - [ ] Clean up screenshots (alert handling)
 - [ ] Link selection (advanced queries)
 - [ ] Search for answer (website scraping = response)
