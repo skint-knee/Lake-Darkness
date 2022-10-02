@@ -5,10 +5,11 @@ def main():
     # Insert a project name
     print("Input a project name:")
     project_name = str(input().lower())
+
+    print("Input the project's site URL:")
+    project_site = str(input().lower())
     # Create google search strings.
-    result_num = 3
-    
-    
+    result_num_c = 1
     community_queries = [
         
         '{} negative news'.format(project_name),
@@ -18,20 +19,23 @@ def main():
         
         ]
     
+    result_num_d = 1
     development_queries = [
         
-        '{} team members'.format(project_name),
+        '{} team members site:{}'.format(project_name, project_site),
         '{} development team'.format(project_name),
         'who built {}'.format(project_name),
         '{} company location'.format(project_name),
         '{} team location'.format(project_name),
         
         ]
+
+    result_num_t = 1
     tokenomics_queries = [
         
-        "{} purpose".format(project_name), 
+        "{} purpose site:{}".format(project_name, project_site), 
         '{} usecase'.format(project_name),
-        '{} whitepaper'.format(project_name),
+        '{} whitepaper site:{}'.format(project_name, project_site),
 
         ]
     
@@ -43,17 +47,17 @@ def main():
     print(Fore.YELLOW + "GETTING URLS" + Style.RESET_ALL)
    
     print("Getting Community URLs...")
-    community_urls = dark.project_search(community_queries, result_num)
+    community_urls = dark.project_search(community_queries, result_num_c)
     dark.write_url_list_txt(community_urls, project_directory, project_name)
     print(Fore.GREEN + "done" + Style.RESET_ALL)
    
     print("Getting Development URLs...") 
-    development_urls = dark.project_search(development_queries, result_num)
+    development_urls = dark.project_search(development_queries, result_num_d)
     dark.write_url_list_txt(development_urls, project_directory, project_name)
     print(Fore.GREEN + "done" + Style.RESET_ALL)
     
     print("Getting Tokenomics URLs...")
-    tokenomics_urls = dark.project_search(tokenomics_queries, result_num)
+    tokenomics_urls = dark.project_search(tokenomics_queries, result_num_t)
     dark.write_url_list_txt(tokenomics_urls, project_directory, project_name)
     print(Fore.GREEN + "done" + Style.RESET_ALL)
     
