@@ -102,7 +102,7 @@ def screenshot_threading(p_name, url_list, project_dir, type):
         
         screenshot_thread = threading.Thread(target = take_screenshot, args = (url, p_name, project_dir, screenshot_num, type))
         screenshot_thread.start()
-        time.sleep(3)
+        time.sleep(6)
 
     screenshot_thread.join()
 
@@ -110,11 +110,11 @@ def screenshot_threading(p_name, url_list, project_dir, type):
 def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     screenshot_name = '{}_{}_screenshot_{}.png'.format(p_name, type, screenshot_num)
-      
+
     driver.maximize_window()
     driver.set_page_load_timeout(60)
     driver.get(url)
-
+    driver.execute_script("window.scrollBy(0, 100)", "")
     time.sleep(2)
     
     driver.get_screenshot_as_file('{}\{}'.format(project_dir, screenshot_name))

@@ -6,7 +6,7 @@ def main():
     print("Input a project name:")
     project_name = str(input().lower())
     # Create google search strings.
-    result_num = 1
+    result_num = 3
     
     
     community_queries = [
@@ -36,31 +36,42 @@ def main():
         ]
     
     # Create project directory. [0, 1, 2, 3] = [main, community, development, tokenomics]
-    print("CREATING DIRECTORIES")
+    print(Fore.YELLOW + "CREATING DIRECTORIES" + Style.RESET_ALL)
     project_directory = dark.create_directory(project_name)
 
     # Grab project URLs
-    print("GETTING URLS")
+    print(Fore.YELLOW + "GETTING URLS" + Style.RESET_ALL)
    
     print("Getting Community URLs...")
     community_urls = dark.project_search(community_queries, result_num)
     dark.write_url_list_txt(community_urls, project_directory, project_name)
+    print(Fore.GREEN + "done" + Style.RESET_ALL)
    
     print("Getting Development URLs...") 
     development_urls = dark.project_search(development_queries, result_num)
     dark.write_url_list_txt(development_urls, project_directory, project_name)
+    print(Fore.GREEN + "done" + Style.RESET_ALL)
     
     print("Getting Tokenomics URLs...")
     tokenomics_urls = dark.project_search(tokenomics_queries, result_num)
     dark.write_url_list_txt(tokenomics_urls, project_directory, project_name)
+    print(Fore.GREEN + "done" + Style.RESET_ALL)
     
     #url_list_of_lists = [community_urls, development_urls, tokenomics_urls]
     # Take URL page screenshots and post to the project folder
-    print("ATTEMPTING TO TAKE SCREENSHOTS")
-
+    print(Fore.YELLOW + "ATTEMPTING TO TAKE SCREENSHOTS" + Style.RESET_ALL)
+    
+    print("Getting Community screenshots...")
     dark.screenshot_threading(project_name, community_urls, project_directory[1], "community")
+    print(Fore.GREEN + "done" + Style.RESET_ALL)
+    
+    print("Getting Development screenshots...")
     dark.screenshot_threading(project_name, development_urls, project_directory[2], "development")
+    print(Fore.GREEN + "done" + Style.RESET_ALL)
+    
+    print("Getting Tokenomics screenshots...")
     dark.screenshot_threading(project_name, tokenomics_urls, project_directory[3], "tokenomics")
+    print(Fore.GREEN + "done" + Style.RESET_ALL)
 
     print(Fore.YELLOW + "Finished preliminary recon: {}".format(project_name) + Style.RESET_ALL)
 
