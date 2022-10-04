@@ -3,17 +3,9 @@ Python version 3.10.5
 
 ## Features
 - [x] OSINT Recon Automation (URLs by link order, screenshots, timestamps)
-- [ ] URLs, timestamp, screenshots to docx (append)
-- [ ] Full queries to docx (DP template)
-- [ ] Compile responses to paraphrased pdf report
-
-- [ ] Generate list of reliable sources
-- [ ] Screenshot certain elements (reliable source sites)
-- [ ] Clean up screenshots (alert handling)
-- [ ] Link selection (advanced queries)
-- [ ] Search for answer (website scraping = response)
+- [ ] Read meta data to pull URLs based on keyword density (tiny tool | https://www.worthwebscraping.com/how-to-scrape-metadata-from-website-using-python/)
+- [ ] Website form for queries (query, response field, URL lookup, attachment field)
 - [ ] Auto Grammar Check (response)
-- [ ] DP Model (query id, query, image, image timestamp, response)
-- [ ] Auto Generate Report (DP export to .csv/.pdf)
-- [ ] Push report to website (research list/blog post)
-- [ ] ML model for advanced link selection
+- [ ] Auto Generate Compiled Report (DP export to .csv/.pdf)
+- [ ] Auto format blog post
+- [ ] ML models (quantitative & qualitative)
