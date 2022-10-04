@@ -3,6 +3,10 @@ Python version 3.10.5
 
 ## Features
 - [x] OSINT Recon Automation (URLs by link order, screenshots, timestamps)
+- [ ] URLs, timestamp, screenshots to docx (append)
+- [ ] Full queries to docx (DP template)
+- [ ] Compile responses to paraphrased pdf report
+
 - [ ] Generate list of reliable sources
 - [ ] Screenshot certain elements (reliable source sites)
 - [ ] Clean up screenshots (alert handling)

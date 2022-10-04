@@ -12,8 +12,8 @@ def main():
     result_num_c = 1
     community_queries = [
         
-        '{} negative news'.format(project_name),
-        '{} issues'.format(project_name),
+        '{} failures'.format(project_name),
+        '{} bug'.format(project_name),
         '{} problems'.format(project_name),
         '{} risks'.format(project_name),
         
@@ -26,7 +26,7 @@ def main():
         '{} development team'.format(project_name),
         'who built {}'.format(project_name),
         '{} company location'.format(project_name),
-        '{} team location'.format(project_name),
+        '{} company formation'.format(project_name),
         
         ]
 
@@ -34,7 +34,8 @@ def main():
     tokenomics_queries = [
         
         "{} purpose site:{}".format(project_name, project_site), 
-        '{} usecase'.format(project_name),
+        '{} token usecase'.format(project_name),
+        '{} whitepaper filetype:pdf'.format(project_name),
         '{} whitepaper site:{}'.format(project_name, project_site),
 
         ]
@@ -61,7 +62,6 @@ def main():
     dark.write_url_list_txt(tokenomics_urls, project_directory, project_name)
     print(Fore.GREEN + "done" + Style.RESET_ALL)
     
-    #url_list_of_lists = [community_urls, development_urls, tokenomics_urls]
     # Take URL page screenshots and post to the project folder
     print(Fore.YELLOW + "ATTEMPTING TO TAKE SCREENSHOTS" + Style.RESET_ALL)
     

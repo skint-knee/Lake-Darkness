@@ -3,6 +3,7 @@ import multiprocessing
 from multiprocessing.connection import wait
 from pydoc import visiblename
 from tracemalloc import take_snapshot
+from wsgiref import headers
 from colorama import Fore, Style
 import os
 import shutil
@@ -75,7 +76,7 @@ def project_search(search_query, results):
     url_list = []
     for q in search_query:
 
-        new_search_generator = googlesearch.search(query=q, lang="en", start=1, stop=results, pause=3)
+        new_search_generator = googlesearch.search(query=q, lang="en", start=1, stop=results, pause=3, )
     
         url_list_conv = list(new_search_generator)
         
@@ -92,7 +93,7 @@ def write_url_list_txt(url_list, project_dir, p_name):
             with open('{}\\{}_URL_list.txt'.format(project_dir[0], p_name), 'a') as f:
                 f.write("{}\n".format(url))
                 f.close()
-
+    
 def screenshot_threading(p_name, url_list, project_dir, type):
     # Screenshot URL result          
     global screenshot_num
@@ -102,7 +103,7 @@ def screenshot_threading(p_name, url_list, project_dir, type):
         
         screenshot_thread = threading.Thread(target = take_screenshot, args = (url, p_name, project_dir, screenshot_num, type))
         screenshot_thread.start()
-        time.sleep(6)
+        time.sleep(3)
 
     screenshot_thread.join()
 
