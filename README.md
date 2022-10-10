@@ -7,5 +7,6 @@ Python version 3.10.5
 - [ ] Auto Grammar Check (response)
 - [ ] Auto Generate Compiled Report (DP export to .csv/.pdf)
 - [ ] Auto format blog post
+- [ ] Incorporated financial modeling (valuations) for projects identified
 - [ ] Incentive system (crypto)
 - [ ] ML models (quantitative & qualitative)
