@@ -7,6 +7,8 @@ Python version 3.10.5
 - [ ] Auto Grammar Check (response)
 - [ ] Auto Generate Compiled Report (DP export to .csv/.pdf)
 - [ ] Auto format blog post
+- [ ] Auto output tweets, linkedin posts
+- [ ] Bot engagement strategy (likes, repost, search volume, etc.)
 - [ ] Incorporated financial modeling (valuations) for projects identified
 - [ ] Incentive system (crypto)
 - [ ] ML models (quantitative & qualitative)
