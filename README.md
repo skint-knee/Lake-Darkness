@@ -10,6 +10,7 @@ Python version 3.9.6
 - [ ] Auto format blog post
 - [ ] Auto output tweets, linkedin posts
 - [ ] Bot engagement strategy (likes, repost, search volume, etc.)
-- [ ] Incorporated financial modeling (valuations) for projects identified
+- [ ] Trading Bot (arbitrage, scalping, sniping)
+- [ ] Incorporated financial modeling (portfolio/business growth)
 - [ ] Incentive system (crypto)
 - [ ] ML models (quantitative & qualitative)
