@@ -5,5 +5,5 @@ from django.http import HttpResponse
 def projects(request, pk):
     return HttpResponse('Here is the basic response {}'.format(pk))
  
-def project_archive(request):
-    return HttpResponse('project archive')
+def project_form(request):
+    return render(request, 'analyst_form.html')
