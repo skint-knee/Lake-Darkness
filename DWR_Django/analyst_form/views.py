@@ -6,4 +6,4 @@ def projects(request, pk):
     return HttpResponse('Here is the basic response {}'.format(pk))
  
 def project_form(request):
-    return render(request, 'analyst_form.html')
+    return render(request, 'analyst_form/analyst_form.html')
