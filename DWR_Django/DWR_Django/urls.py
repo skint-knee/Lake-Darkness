@@ -7,8 +7,7 @@ def project_archive(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('project-archive/', project_archive, name="project-archive"),
-    #path('', include('analyst_form.urls'))
+    path('', include('analyst_form.urls'))
 
 ]
 
