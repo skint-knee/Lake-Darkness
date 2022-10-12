@@ -1,10 +1,13 @@
 import Darkness as dark
 from colorama import Fore, Style
+import sys
 
 def main():
     # Insert a project name
     print("Input a project name:")
     project_name = str(input().lower())
+    # Check for and create project directory. [0, 1, 2, 3] = [main, community, development, tokenomics]
+    project_directory = dark.check_project(project_name)
 
     print("Input the project's site URL:")
     project_site = str(input().lower())
@@ -39,9 +42,6 @@ def main():
         '{} whitepaper site:{}'.format(project_name, project_site),
 
         ]
-    
-    # Create project directory. [0, 1, 2, 3] = [main, community, development, tokenomics]
-    project_directory = dark.create_directory(project_name)
 
     # Grab project URLs
     print(Fore.YELLOW + "GETTING URLS" + Style.RESET_ALL)
@@ -64,8 +64,9 @@ def main():
     
     dark.screenshot_threading(project_name, tokenomics_urls, project_directory[3], "tokenomics")
 
-
     print(Fore.YELLOW + "Finished preliminary recon: {}".format(project_name) + Style.RESET_ALL)
+
+    sys.exit()
 
 if __name__=='__main__':
     main()

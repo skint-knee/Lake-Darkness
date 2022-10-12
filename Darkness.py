@@ -25,25 +25,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 def main():
     pass
 
-def create_directory(p_name):
-    print(Fore.YELLOW + "CREATING DIRECTORIES" + Style.RESET_ALL)
-    # checks to see if a directory exists. If it doesn't, it makes a new one.
+def check_project(p_name):
     screenshots_dir = os.getcwd() + '\Lake-Darkness\projects\{}'.format(p_name)
     
     isExist = os.path.exists(screenshots_dir)
-    
-    if not isExist:
-        os.makedirs(screenshots_dir)
-        os.makedirs(screenshots_dir + "\community")
-        os.makedirs(screenshots_dir + "\development")
-        os.makedirs(screenshots_dir + "\\tokenomics")
 
-        print(Fore.GREEN + "Successfully created:", screenshots_dir)
-        print("Successfully created:", screenshots_dir + "\community")
-        print("Successfully created:", screenshots_dir + "\development")
-        print("Successfully created:", screenshots_dir + "\\tokenomics" + Style.RESET_ALL)
-    
-    else:
+    if isExist:
         print("A directory for {} exists. Replace?".format(p_name))
 
         y_list = ("y", "yes", "Y", "YES", "Yes")
@@ -56,10 +43,33 @@ def create_directory(p_name):
             print(Fore.YELLOW + "Previous project data removed: {}.".format(p_name))
             print(">> Creating new directory...\n" + Style.RESET_ALL)
             
-            create_directory(p_name)     
+            dir_tuple = create_directory(screenshots_dir)
+        
+            return dir_tuple     
+        
         else:
             print(Fore.RED + "Declined action." + Style.RESET_ALL)
             sys.exit()
+    
+    else:
+        dir_tuple = create_directory(screenshots_dir)
+        
+        return dir_tuple
+
+
+def create_directory(screenshots_dir):
+    print(Fore.YELLOW + "CREATING DIRECTORIES" + Style.RESET_ALL)
+    # checks to see if a directory exists. If it doesn't, it makes a new one.
+    
+    os.makedirs(screenshots_dir)
+    os.makedirs(screenshots_dir + "\community")
+    os.makedirs(screenshots_dir + "\development")
+    os.makedirs(screenshots_dir + "\\tokenomics")
+
+    print(Fore.GREEN + "Successfully created:", screenshots_dir)
+    print("Successfully created:", screenshots_dir + "\community")
+    print("Successfully created:", screenshots_dir + "\development")
+    print("Successfully created:", screenshots_dir + "\\tokenomics" + Style.RESET_ALL)
     
     directory_tuple = (
         screenshots_dir, 
@@ -107,12 +117,11 @@ def screenshot_threading(p_name, url_list, project_dir, type):
         
         screenshot_thread = threading.Thread(target = take_screenshot, args = (url, p_name, project_dir, screenshot_num, type))
         screenshot_thread.start()
+        time.sleep(2)
 
     screenshot_thread.join()
-    
-    print(Fore.GREEN + "Finished {} screenshots!".format(type) + Style.RESET_ALL)
-    
 
+    print(Fore.GREEN + "Finished {} screenshots!".format(type) + Style.RESET_ALL)
 
 def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -131,8 +140,6 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
     print(Fore.GREEN + "Took screenshot {}!".format(screenshot_name) + Style.RESET_ALL)
     print(url)
 
-    driver.close()
-   
     # print URL to .txt file
     with open('{}\\{}_{}_URLs.txt'.format(project_dir, p_name, type), 'a') as f:
         
@@ -142,7 +149,8 @@ def take_screenshot(url, p_name, project_dir, screenshot_num, type):
         f.write("{}\n\n".format(url))  
         
         f.close()
-
+    
+    driver.close()
     
 
 def timestamp():
