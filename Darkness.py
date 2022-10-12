@@ -80,6 +80,8 @@ def create_directory(screenshots_dir):
     
     return directory_tuple
     
+def project_search_threads():
+    #finish this and figure out why there's a pause between the URL screenshot segments
 
 def project_search(search_query, results, type):
     # OSINT search on crypto project
