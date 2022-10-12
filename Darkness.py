@@ -1,5 +1,4 @@
 import calendar
-import multiprocessing
 from multiprocessing.connection import wait
 from pydoc import visiblename
 from tracemalloc import take_snapshot
@@ -27,6 +26,7 @@ def main():
     pass
 
 def create_directory(p_name):
+    print(Fore.YELLOW + "CREATING DIRECTORIES" + Style.RESET_ALL)
     # checks to see if a directory exists. If it doesn't, it makes a new one.
     screenshots_dir = os.getcwd() + '\Lake-Darkness\projects\{}'.format(p_name)
     
@@ -71,8 +71,9 @@ def create_directory(p_name):
     return directory_tuple
     
 
-def project_search(search_query, results):
+def project_search(search_query, results, type):
     # OSINT search on crypto project
+    print("Getting {} URLs...".format(type))
     url_list = []
     for q in search_query:
 
@@ -83,7 +84,7 @@ def project_search(search_query, results):
         for u in url_list_conv:
             
             url_list.append(u)
-
+    
     return url_list
 
 def write_url_list_txt(url_list, project_dir, p_name):
@@ -93,9 +94,12 @@ def write_url_list_txt(url_list, project_dir, p_name):
             with open('{}\\{}_URL_list.txt'.format(project_dir[0], p_name), 'a') as f:
                 f.write("{}\n".format(url))
                 f.close()
+
+        print(Fore.GREEN + "done" + Style.RESET_ALL)
     
 def screenshot_threading(p_name, url_list, project_dir, type):
-    # Screenshot URL result          
+    # Screenshot URL result
+    print("Getting {} screenshots...".format(type))          
     global screenshot_num
     screenshot_num = 0
     for url in url_list:
@@ -103,9 +107,11 @@ def screenshot_threading(p_name, url_list, project_dir, type):
         
         screenshot_thread = threading.Thread(target = take_screenshot, args = (url, p_name, project_dir, screenshot_num, type))
         screenshot_thread.start()
-        time.sleep(3)
 
     screenshot_thread.join()
+    
+    print(Fore.GREEN + "Finished {} screenshots!".format(type) + Style.RESET_ALL)
+    
 
 
 def take_screenshot(url, p_name, project_dir, screenshot_num, type):
