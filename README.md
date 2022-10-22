@@ -11,6 +11,7 @@ Python version 3.9.6
 - [ ] Auto output tweets, linkedin posts
 - [ ] Bot engagement strategy (likes, repost, search volume, etc.)
 - [ ] Trading Bot (arbitrage, scalping, sniping)
+- [ ] Sniff etherscan for projects
 - [ ] Incorporated financial modeling (portfolio/business growth)
 - [ ] Incentive system (crypto)
 - [ ] ML models (quantitative & qualitative)
